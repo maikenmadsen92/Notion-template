@@ -1,0 +1,1220 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>My Personal Dashboard</title>
+
+  <style>
+
+    /* ========================================
+       BASIC
+    ======================================== */
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+      background: #f5f1eb;
+      color: #34332f;
+
+      min-height: 100vh;
+      padding: 35px;
+    }
+
+    .dashboard {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+
+    /* ========================================
+       HERO
+    ======================================== */
+
+    .hero {
+      position: relative;
+
+      height: 330px;
+
+      border-radius: 30px;
+      overflow: hidden;
+
+      margin-bottom: 28px;
+
+      background:
+        radial-gradient(
+          circle at 20% 40%,
+          rgba(255,255,255,0.95) 0%,
+          rgba(255,255,255,0) 25%
+        ),
+
+        radial-gradient(
+          circle at 75% 30%,
+          rgba(220,170,180,0.75) 0%,
+          rgba(220,170,180,0) 30%
+        ),
+
+        radial-gradient(
+          circle at 60% 80%,
+          rgba(178,195,160,0.75) 0%,
+          rgba(178,195,160,0) 35%
+        ),
+
+        linear-gradient(
+          120deg,
+          #eee6dc,
+          #e9ded3,
+          #f2e7df
+        );
+    }
+
+
+    /* Decorative flowers */
+
+    .flower {
+      position: absolute;
+
+      width: 120px;
+      height: 120px;
+
+      opacity: 0.8;
+
+      animation:
+        floating 7s ease-in-out infinite;
+    }
+
+
+    .flower::before,
+    .flower::after {
+      content: "";
+
+      position: absolute;
+
+      width: 70px;
+      height: 70px;
+
+      background: #d59ca9;
+
+      border-radius:
+        70% 30% 70% 30%;
+
+      transform-origin: bottom right;
+    }
+
+
+    .flower::before {
+      transform: rotate(25deg);
+    }
+
+
+    .flower::after {
+      transform: rotate(115deg);
+
+      background: #e5b7c0;
+    }
+
+
+    .flower.one {
+      right: 100px;
+      top: 45px;
+
+      transform: rotate(-20deg);
+    }
+
+
+    .flower.two {
+      right: 230px;
+      bottom: 20px;
+
+      transform: scale(.75) rotate(30deg);
+
+      opacity: .6;
+    }
+
+
+    .flower.three {
+      left: 80px;
+      bottom: -20px;
+
+      transform: scale(.55) rotate(-25deg);
+
+      opacity: .45;
+    }
+
+
+    /* Stems */
+
+    .stem {
+      position: absolute;
+
+      width: 3px;
+      height: 230px;
+
+      background: #829277;
+
+      border-radius: 50%;
+
+      transform-origin: bottom;
+
+      opacity: .65;
+    }
+
+
+    .stem.one {
+      right: 145px;
+      bottom: -60px;
+
+      transform: rotate(12deg);
+    }
+
+
+    .stem.two {
+      right: 275px;
+      bottom: -70px;
+
+      transform: rotate(-14deg);
+    }
+
+
+    /* Hero text */
+
+    .hero-content {
+      position: absolute;
+
+      left: 42px;
+      bottom: 38px;
+
+      z-index: 5;
+    }
+
+
+    .small-title {
+      font-size: 12px;
+
+      letter-spacing: 2px;
+
+      text-transform: uppercase;
+
+      color: #77736c;
+
+      margin-bottom: 9px;
+    }
+
+
+    .hero-content h1 {
+      font-family: Georgia, serif;
+
+      font-size: 46px;
+
+      font-weight: 400;
+
+      color: #38352f;
+
+      margin-bottom: 10px;
+    }
+
+
+    .hero-content p {
+      color: #69645c;
+
+      font-size: 15px;
+    }
+
+
+    /* ========================================
+       PROFILE
+    ======================================== */
+
+    .profile {
+      display: flex;
+
+      align-items: center;
+
+      gap: 16px;
+
+      margin-bottom: 28px;
+    }
+
+
+    .profile-image {
+      width: 70px;
+      height: 70px;
+
+      border-radius: 50%;
+
+      object-fit: cover;
+
+      border: 4px solid #fff;
+
+      box-shadow:
+        0 5px 20px rgba(60,50,40,.08);
+    }
+
+
+    .profile h2 {
+      font-family: Georgia, serif;
+
+      font-size: 21px;
+
+      font-weight: 400;
+
+      margin-bottom: 4px;
+    }
+
+
+    .profile p {
+      font-size: 13px;
+
+      color: #858077;
+    }
+
+
+    /* ========================================
+       MAIN GRID
+    ======================================== */
+
+    .grid {
+      display: grid;
+
+      grid-template-columns:
+        1.25fr 1fr;
+
+      gap: 22px;
+    }
+
+
+    .card {
+      background: rgba(255,255,255,.72);
+
+      border: 1px solid rgba(120,110,100,.12);
+
+      border-radius: 24px;
+
+      padding: 26px;
+
+      box-shadow:
+        0 12px 40px rgba(70,55,40,.06);
+
+      backdrop-filter: blur(10px);
+    }
+
+
+    .card-title {
+      display: flex;
+
+      justify-content: space-between;
+
+      align-items: center;
+
+      margin-bottom: 24px;
+    }
+
+
+    .card-title h3 {
+      font-family: Georgia, serif;
+
+      font-size: 22px;
+
+      font-weight: 400;
+    }
+
+
+    .card-title span {
+      font-size: 12px;
+
+      color: #979188;
+    }
+
+
+    /* ========================================
+       CALENDAR
+    ======================================== */
+
+    .calendar-navigation {
+      display: flex;
+
+      justify-content: space-between;
+
+      align-items: center;
+
+      margin-bottom: 20px;
+    }
+
+
+    .calendar-navigation h4 {
+      font-family: Georgia, serif;
+
+      font-size: 18px;
+
+      font-weight: 400;
+    }
+
+
+    .calendar-navigation button {
+      border: none;
+
+      background: #eee8e0;
+
+      color: #59554e;
+
+      width: 32px;
+      height: 32px;
+
+      border-radius: 50%;
+
+      cursor: pointer;
+
+      transition: .2s;
+    }
+
+
+    .calendar-navigation button:hover {
+      background: #ded5ca;
+
+      transform: scale(1.05);
+    }
+
+
+    .weekdays,
+    .days {
+      display: grid;
+
+      grid-template-columns:
+        repeat(7, 1fr);
+
+      gap: 5px;
+
+      text-align: center;
+    }
+
+
+    .weekdays {
+      font-size: 11px;
+
+      color: #a09a91;
+
+      margin-bottom: 9px;
+    }
+
+
+    .day {
+      padding: 10px 5px;
+
+      border-radius: 12px;
+
+      font-size: 13px;
+
+      color: #625e57;
+
+      cursor: pointer;
+
+      transition: .2s;
+    }
+
+
+    .day:hover {
+      background: #f0ebe5;
+    }
+
+
+    .today {
+      background: #9aa88e;
+
+      color: white;
+
+      font-weight: 600;
+
+      box-shadow:
+        0 4px 12px rgba(110,125,100,.2);
+    }
+
+
+    /* ========================================
+       TODO
+    ======================================== */
+
+    .todo-list {
+      display: flex;
+
+      flex-direction: column;
+
+      gap: 9px;
+    }
+
+
+    .todo-item {
+      display: flex;
+
+      align-items: center;
+
+      gap: 12px;
+
+      background: #f5f1eb;
+
+      padding: 13px 14px;
+
+      border-radius: 14px;
+
+      transition: .2s;
+    }
+
+
+    .todo-item:hover {
+      background: #eee8e0;
+
+      transform: translateX(2px);
+    }
+
+
+    .todo-item input {
+      appearance: none;
+
+      width: 19px;
+      height: 19px;
+
+      border: 1.5px solid #b5afa6;
+
+      border-radius: 50%;
+
+      cursor: pointer;
+
+      position: relative;
+    }
+
+
+    .todo-item input:checked {
+      background: #9aa88e;
+
+      border-color: #9aa88e;
+    }
+
+
+    .todo-item input:checked::after {
+      content: "✓";
+
+      position: absolute;
+
+      color: white;
+
+      font-size: 12px;
+
+      left: 4px;
+      top: 0px;
+    }
+
+
+    .todo-item span {
+      font-size: 14px;
+
+      color: #57534d;
+    }
+
+
+    .todo-item.completed span {
+      text-decoration: line-through;
+
+      color: #aaa49b;
+    }
+
+
+    /* Add task */
+
+    .add-task {
+      display: flex;
+
+      gap: 8px;
+
+      margin-top: 15px;
+    }
+
+
+    .add-task input {
+      flex: 1;
+
+      border: none;
+
+      outline: none;
+
+      background: #f1ece6;
+
+      padding: 12px 14px;
+
+      border-radius: 12px;
+
+      color: #4b4842;
+
+      font-size: 13px;
+    }
+
+
+    .add-task button {
+      border: none;
+
+      background: #9aa88e;
+
+      color: white;
+
+      width: 42px;
+
+      border-radius: 12px;
+
+      cursor: pointer;
+
+      font-size: 20px;
+    }
+
+
+    /* ========================================
+       BOTTOM CARDS
+    ======================================== */
+
+    .bottom {
+      display: grid;
+
+      grid-template-columns:
+        1fr 1fr;
+
+      gap: 22px;
+
+      margin-top: 22px;
+    }
+
+
+    .label {
+      font-size: 10px;
+
+      letter-spacing: 2px;
+
+      color: #9a948a;
+
+      margin-bottom: 12px;
+    }
+
+
+    .quote {
+      font-family: Georgia, serif;
+
+      font-size: 19px;
+
+      line-height: 1.5;
+
+      color: #555048;
+    }
+
+
+    /* ========================================
+       ANIMATION
+    ======================================== */
+
+    @keyframes floating {
+
+      0%, 100% {
+        transform:
+          translateY(0)
+          rotate(-5deg);
+      }
+
+      50% {
+        transform:
+          translateY(-8px)
+          rotate(3deg);
+      }
+
+    }
+
+
+    /* ========================================
+       MOBILE
+    ======================================== */
+
+    @media (max-width: 800px) {
+
+      body {
+        padding: 15px;
+      }
+
+      .grid,
+      .bottom {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        height: 300px;
+      }
+
+      .hero-content {
+        left: 25px;
+        bottom: 25px;
+      }
+
+      .hero-content h1 {
+        font-size: 35px;
+      }
+
+      .flower.one {
+        right: 20px;
+      }
+
+      .flower.two {
+        right: 100px;
+      }
+
+    }
+
+  </style>
+</head>
+
+
+<body>
+
+  <main class="dashboard">
+
+
+    <!-- =====================================
+         HERO
+    ====================================== -->
+
+    <section class="hero">
+
+      <!-- Decorative flowers -->
+
+      <div class="stem one"></div>
+      <div class="stem two"></div>
+
+      <div class="flower one"></div>
+      <div class="flower two"></div>
+      <div class="flower three"></div>
+
+
+      <div class="hero-content">
+
+        <div class="small-title">
+          Personal Dashboard
+        </div>
+
+        <h1>
+          Good afternoon
+        </h1>
+
+        <p id="date"></p>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =====================================
+         PROFILE
+    ====================================== -->
+
+    <section class="profile">
+
+      <!--
+        SKIFT DETTE BILLEDE TIL DIT EGET
+      -->
+
+      <img
+        class="profile-image"
+        src="assets/profile.JPEG"
+        alt="Profilbillede"
+      >
+
+      <div>
+
+        <h2>
+          Dit navn
+        </h2>
+
+        <p>
+          Welcome back to your personal space
+        </p>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =====================================
+         CALENDAR + TODO
+    ====================================== -->
+
+    <section class="grid">
+
+
+      <!-- CALENDAR -->
+
+      <div class="card">
+
+        <div class="card-title">
+
+          <h3>
+            Calendar
+          </h3>
+
+          <span>
+            Your month
+          </span>
+
+        </div>
+
+
+        <div class="calendar-navigation">
+
+          <button onclick="previousMonth()">
+            ‹
+          </button>
+
+          <h4 id="month"></h4>
+
+          <button onclick="nextMonth()">
+            ›
+          </button>
+
+        </div>
+
+
+        <div class="weekdays">
+
+          <span>Man</span>
+          <span>Tir</span>
+          <span>Ons</span>
+          <span>Tor</span>
+          <span>Fre</span>
+          <span>Lør</span>
+          <span>Søn</span>
+
+        </div>
+
+
+        <div
+          class="days"
+          id="calendar"
+        ></div>
+
+      </div>
+
+
+
+      <!-- TODO -->
+
+      <div class="card">
+
+        <div class="card-title">
+
+          <h3>
+            To-do
+          </h3>
+
+          <span id="taskCount">
+            0 tasks
+          </span>
+
+        </div>
+
+
+        <div
+          class="todo-list"
+          id="todo"
+        ></div>
+
+
+        <div class="add-task">
+
+          <input
+            id="taskInput"
+            type="text"
+            placeholder="Add a task..."
+            onkeydown="handleEnter(event)"
+          >
+
+          <button onclick="addTask()">
+            +
+          </button>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =====================================
+         BOTTOM
+    ====================================== -->
+
+    <section class="bottom">
+
+
+      <div class="card">
+
+        <div class="label">
+          TODAY'S FOCUS
+        </div>
+
+        <div class="quote">
+          Focus on what matters
+          and let everything else wait.
+        </div>
+
+      </div>
+
+
+      <div class="card">
+
+        <div class="label">
+          LITTLE REMINDER
+        </div>
+
+        <div class="quote">
+          Make today beautiful.
+          One small thing at a time. ✨
+        </div>
+
+      </div>
+
+
+    </section>
+
+
+  </main>
+
+
+
+<script>
+
+  /* ========================================
+     DATE
+  ======================================== */
+
+  const dateElement =
+    document.getElementById("date");
+
+  const today =
+    new Date();
+
+  dateElement.textContent =
+    today.toLocaleDateString(
+      "da-DK",
+      {
+        weekday: "long",
+        day: "numeric",
+        month: "long",
+        year: "numeric"
+      }
+    );
+
+
+
+  /* ========================================
+     CALENDAR
+  ======================================== */
+
+  let currentDate =
+    new Date();
+
+
+  const monthNames = [
+
+    "Januar",
+    "Februar",
+    "Marts",
+    "April",
+    "Maj",
+    "Juni",
+    "Juli",
+    "August",
+    "September",
+    "Oktober",
+    "November",
+    "December"
+
+  ];
+
+
+  function renderCalendar() {
+
+    const calendar =
+      document.getElementById("calendar");
+
+    calendar.innerHTML = "";
+
+
+    const month =
+      currentDate.getMonth();
+
+    const year =
+      currentDate.getFullYear();
+
+
+    document.getElementById("month")
+      .textContent =
+      monthNames[month] +
+      " " +
+      year;
+
+
+    let firstDay =
+      new Date(
+        year,
+        month,
+        1
+      ).getDay();
+
+
+    /*
+      JavaScript:
+      Sunday = 0
+
+      Vi vil have:
+      Monday = 0
+    */
+
+    firstDay =
+      firstDay === 0
+        ? 6
+        : firstDay - 1;
+
+
+    const daysInMonth =
+      new Date(
+        year,
+        month + 1,
+        0
+      ).getDate();
+
+
+    /*
+      Empty spaces
+    */
+
+    for (
+      let i = 0;
+      i < firstDay;
+      i++
+    ) {
+
+      const empty =
+        document.createElement("div");
+
+      calendar.appendChild(empty);
+
+    }
+
+
+    /*
+      Days
+    */
+
+    for (
+      let day = 1;
+      day <= daysInMonth;
+      day++
+    ) {
+
+      const element =
+        document.createElement("div");
+
+
+      element.classList.add(
+        "day"
+      );
+
+
+      element.textContent =
+        day;
+
+
+      /*
+        Highlight today
+      */
+
+      if (
+
+        day === today.getDate() &&
+
+        month === today.getMonth() &&
+
+        year === today.getFullYear()
+
+      ) {
+
+        element.classList.add(
+          "today"
+        );
+
+      }
+
+
+      calendar.appendChild(
+        element
+      );
+
+    }
+
+  }
+
+
+  function previousMonth() {
+
+    currentDate.setMonth(
+      currentDate.getMonth() - 1
+    );
+
+    renderCalendar();
+
+  }
+
+
+  function nextMonth() {
+
+    currentDate.setMonth(
+      currentDate.getMonth() + 1
+    );
+
+    renderCalendar();
+
+  }
+
+
+  renderCalendar();
+
+
+
+  /* ========================================
+     TODO LIST
+  ======================================== */
+
+  let tasks = [
+
+    "Plan my day",
+    "Workout",
+    "Finish important project"
+
+  ];
+
+
+  function renderTasks() {
+
+    const todo =
+      document.getElementById("todo");
+
+    todo.innerHTML = "";
+
+
+    tasks.forEach(
+      (task, index) => {
+
+        const item =
+          document.createElement("div");
+
+        item.className =
+          "todo-item";
+
+
+        item.innerHTML = `
+
+          <input
+            type="checkbox"
+            onchange="completeTask(${index})"
+          >
+
+          <span>
+            ${task}
+          </span>
+
+        `;
+
+
+        todo.appendChild(item);
+
+      }
+    );
+
+
+    document.getElementById(
+      "taskCount"
+    ).textContent =
+
+      tasks.length === 1
+        ? "1 task"
+        : tasks.length + " tasks";
+
+  }
+
+
+
+  function addTask() {
+
+    const input =
+      document.getElementById(
+        "taskInput"
+      );
+
+
+    const value =
+      input.value.trim();
+
+
+    if (!value) return;
+
+
+    tasks.push(value);
+
+
+    input.value = "";
+
+
+    renderTasks();
+
+  }
+
+
+
+  function handleEnter(event) {
+
+    if (
+      event.key === "Enter"
+    ) {
+
+      addTask();
+
+    }
+
+  }
+
+
+
+  function completeTask(index) {
+
+    tasks.splice(
+      index,
+      1
+    );
+
+    renderTasks();
+
+  }
+
+
+  renderTasks();
+
+</script>
+
+
+</body>
+</html>
